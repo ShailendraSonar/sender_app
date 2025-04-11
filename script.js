@@ -22,7 +22,7 @@ const firebaseConfig = {
   
     db.ref('overlay/text').set(message)
       .then(() => {
-        alert('Message sent successfully!');
+        // alert('Message sent successfully!');
         document.getElementById('message').value = '';
       })
       .catch(error => {
