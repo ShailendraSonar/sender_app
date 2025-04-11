@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Overlay Sender App</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #00ff90;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    textarea {
+      width: 90%;
+      height: 200px;
+      margin-bottom: 20px;
+      background: #2e2e2e;
+      color: #00ff90;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      resize: none;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #00ff90;
+      color: #1e1e1e;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #00cc72;
+    }
+  </style>
+</head>
+<body>
+  <h2>Overlay Sender App</h2>
+  <textarea id="message" placeholder="Type your code or message here..."></textarea>
+  <button onclick="sendMessage()">Send to Overlay</button>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>
