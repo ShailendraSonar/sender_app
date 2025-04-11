@@ -12,9 +12,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       height: 100vh;
       margin: 0;
+      padding-top: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
     }
 
     textarea {
@@ -38,20 +43,81 @@
       font-size: 16px;
       cursor: pointer;
       border-radius: 4px;
+      margin-bottom: 20px;
     }
 
     button:hover {
       background-color: #00cc72;
     }
+
+    .response-box {
+      background: #2e2e2e;
+      color: #ff00ff;
+      padding: 10px;
+      border-radius: 4px;
+      width: 90%;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h2>Overlay Sender App</h2>
+  
   <textarea id="message" placeholder="Type your code or message here..."></textarea>
   <button onclick="sendMessage()">Send to Overlay</button>
+
+  <div class="response-box" id="responseBox">Response: Waiting...</div>
+
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  
-  <script src="script.js"></script>
+  <script>
+    // ✅ Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWQN5byKwp-ArP3wR1atnADhrvWEq6T-0",
+      authDomain: "stealth-ea9bf.firebaseapp.com",
+      databaseURL: "https://stealth-ea9bf-default-rtdb.firebaseio.com",
+      projectId: "stealth-ea9bf",
+      storageBucket: "stealth-ea9bf.appspot.com",
+      messagingSenderId: "1026325715495",
+      appId: "1:1026325715495:web:7349860eb345ce8ac40c02"
+    };
+
+    // ✅ Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // ✅ Send message to overlay
+    function sendMessage() {
+      const msg = document.getElementById('message').value.trim();
+      if (!msg) {
+        alert('Please enter a message!');
+        return;
+      }
+
+      db.ref('overlay/text').set(msg)
+        .then(() => {
+          alert('Message sent!');
+          document.getElementById('message').value = '';
+        })
+        .catch(console.error);
+    }
+
+    // ✅ Listen for responses from overlay (hotkey-based)
+    const responseBox = document.getElementById('responseBox');
+
+    db.ref('response/text').on('value', (snapshot) => {
+      const response = snapshot.val();
+      if (response) {
+        responseBox.textContent = 'Response: ' + response;
+
+        // ✅ Optional: Visual feedback on new response
+        responseBox.style.backgroundColor = '#4b0082'; // Indigo flash
+        setTimeout(() => {
+          responseBox.style.backgroundColor = '#2e2e2e'; // Reset
+        }, 500);
+      }
+    });
+  </script>
 </body>
 </html>
